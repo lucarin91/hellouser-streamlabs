@@ -1,6 +1,7 @@
 (() => {
     "use strict";
-    const socket = new WebSocket('ws://127.0.0.1:3337/streamlabs');
+    document.domain = "localhost";
+    const socket = new WebSocket('ws://localhost:3337/streamlabs');
 
     const box = document.getElementById("msg-box");
     box.style.display = 'none';
