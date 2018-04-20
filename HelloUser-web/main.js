@@ -1,4 +1,3 @@
-document.domain = "localhost";
 (() => {
     "use strict";
     const socket = new WebSocket('ws://localhost:3337/streamlabs');
