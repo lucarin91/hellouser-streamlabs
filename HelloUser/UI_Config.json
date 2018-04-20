@@ -1,0 +1,18 @@
+{
+    "output_file": "settings.json",
+    "saluto": {
+        "type": "textbox",
+        "value": "Buonsalve",
+        "label": "Saluto",
+        "tooltip": "The greating before the name",
+        "group": "Basic"
+    },
+    "trymessage": {
+        "type": "button",
+        "label": "Try greating",
+        "tooltip": "This try the message on OBS",
+        "function": "TryMessage",
+        "wsevent": "EVENT_START_TRY_MESSAGE",
+        "group": "Advance"
+    }
+}
