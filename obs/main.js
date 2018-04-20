@@ -12,12 +12,16 @@
         return
     }
     const API_KEY = queryDict.api_key;
+    const SHOW_TIME = 10
+
+    // global varibles
+    let time, updateFun;
 
     socket.onopen = () => {
         // Format your Authentication Information
         var auth = {
-            author: "HelloUser",
-            //website: "https://StreamlabsChatbot.com",
+            author: "lucarin91",
+            website: "https://github.com/lucarin91/hellouser-streamlabs",
             api_key: API_KEY,
             events: ["EVENT_HELLO_USER"]
         };
@@ -37,11 +41,7 @@
         if (msg_data.event == 'EVENT_HELLO_USER') {
             let msg = JSON.parse(msg_data.data).msg;
             console.log(msg);
-            box.innerText = msg;
-            box.style.display = 'block';
-            setTimeout(() => {
-                box.style.display = "none";
-            }, 10000);
+            showBox(msg);
         }
     };
 
@@ -56,5 +56,28 @@
             queryDict[item.split("=")[0]] = item.split("=")[1]
         });
         return queryDict;
+    }
+
+    function showBox(msg) {
+        box.innerText = msg;
+        box.style.display = 'block';
+        time = SHOW_TIME;
+        if (!updateFun) {
+            runInterval();
+        }
+    }
+
+    function runInterval() {
+        updateFun = setInterval(() => {
+            if (time == 0) {
+                box.style.display = "none";
+                clearInterval(updateFun)
+                updateFun = null
+                console.log('clear interval')
+            } else {
+                time--
+                console.log('interval', time)
+            }
+        }, 1000)
     }
 })();
