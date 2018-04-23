@@ -9,7 +9,7 @@ Then, setup the OBS plugin by adding a browser plugin on OBS with the following 
 Remember to add the `api_key` parameter with the API key that can be found in the script section of the *Streamlab Chatbot* program.
 
 ## Acknowledgement
-This repo uses the [comicbubbles](https://github.com/kaisermann/comicbubbles) css library to for the 8-bit bubbles.
+This repo uses the [comicbubbles](https://github.com/kaisermann/comicbubbles) css library for the 8-bit bubbles.
 
 ## License
 [MIT](/LICENSE)
