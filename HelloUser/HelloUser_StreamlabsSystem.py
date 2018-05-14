@@ -9,46 +9,50 @@ import clr
 clr.AddReference("IronPython.SQLite.dll")
 clr.AddReference("IronPython.Modules.dll")
 from os.path import isfile
+from datetime import datetime, timedelta
 
 #---------------------------------------
 # [Required] Script Information
 #---------------------------------------
 ScriptName = "HelloUser"
-Website = ""
-Description = ""
+Website = "https://github.com/lucarin91/hellouser-streamlabs"
+Description = "Greet user that write on the twitch chat."
 Creator = "lucarin91"
-Version = "1.1.0"
+Version = "2.0.0"
 
 #---------------------------------------
 # Set Variables
 #---------------------------------------
 saluto = "Buonsalve"
-_active_users = []
+delta_minutes = timedelta(minutes=20)
+_active_users = {}
 
 #---------------------------------------
 # [Required] Intialize Data (Only called on Load)
 #---------------------------------------
 def Init():
+    Parent.Log(ScriptName, "Init!")
     settings = 'Services/Scripts/{}/settings.json'.format(ScriptName)
     if isfile(settings):
         with io.open(settings, mode='r', encoding='utf-8-sig') as f:
             conf = json.loads(f.read())
             parse_conf(conf)
-            Parent.Log(ScriptName, 'Load json: {}'.format(string))
 
 #---------------------------------------
 # [Required] Execute Data / Process Messages
 #---------------------------------------
 def Execute(data):
     global _active_users
-    if data.IsChatMessage() and data.IsFromTwitch():
-        active_now = Parent.GetActiveUsers()
-        Parent.Log(ScriptName, 'active_now: {}\nactive_old: {}'.format(active_now, _active_users))
-        if len(active_now) != len(_active_users)\
-           and not Parent.HasPermission(data.User, 'caster', ''):
-            send_saluto(data.User)
-        _active_users = active_now
-
+    if data.IsChatMessage() and data.IsFromTwitch()\
+       and not Parent.HasPermission(data.User, 'caster', ''):
+        user = data.User
+        now = datetime.now()
+        if user not in _active_users\
+           or now - _active_users[user] > delta_minutes:
+            send_saluto(user)
+        _active_users[user] = now
+        # Parent.Log(ScriptName, 'Update deltatime user {}'.format(user)
+        
 #---------------------------------------
 # [Required] Tick Function
 #---------------------------------------
@@ -72,10 +76,12 @@ def TryMessage():
 def send_saluto(user):
     """Broadcast the event with the greating message."""
     msg = '{} {}'.format(saluto, Parent.GetDisplayName(user))
+    Parent.Log(ScriptName, 'Greet {}'.format(user))    
     Parent.BroadcastWsEvent('EVENT_HELLO_USER', json.dumps({"msg": msg}))
 
 def parse_conf(conf):
     """Set the configuration variables."""
-    global saluto
+    global saluto, delta_minutes
     saluto = conf['saluto']
-    Parent.Log(ScriptName, 'Load conf: {}'.format((saluto)))
+    delta_minutes = timedelta(minutes=conf['delta_time'])
+    Parent.Log(ScriptName, 'Load conf: {}'.format((saluto, delta_minutes)))

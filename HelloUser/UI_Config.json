@@ -4,8 +4,35 @@
         "type": "textbox",
         "value": "Buonsalve",
         "label": "Saluto",
-        "tooltip": "The greating before the name",
+        "tooltip": "The greeting before the user name",
         "group": "Basic"
+    },
+    "delta_time": {
+        "type": "slider",
+        "label": "Delta time (minutes)",
+        "value": 20,
+        "min": 5,
+        "max": 40,
+        "ticks": 5,
+        "tooltip": "The number of seconds before greet the same user",
+        "group": "Basic"
+    },
+    "show_time": {
+        "type": "slider",
+        "value": 10,
+        "min": 1,
+        "max": 20,
+        "ticks": 1,
+        "label": "Show time (seconds)",
+        "tooltip": "The number of seconds that the greeting is showed",
+        "group": "Basic"
+    },
+    "api_key": {
+        "type": "textbox",
+        "value": "",
+        "label": "Api Key",
+        "tooltip": "The API KEY of streamlabs",
+        "group": "Setup"
     },
     "trymessage": {
         "type": "button",
@@ -13,6 +40,6 @@
         "tooltip": "This try the message on OBS",
         "function": "TryMessage",
         "wsevent": "EVENT_START_TRY_MESSAGE",
-        "group": "Advance"
+        "group": "Debug"
     }
 }
