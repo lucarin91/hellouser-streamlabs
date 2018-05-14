@@ -9,7 +9,7 @@ Then, setup OBS by adding a browser plugin that point on the `index.html` file i
 Remember to setup the `api_key` parameter inside streamlabs script configuration. The API key of Streamlabs can be found in the script section of the *Streamlab Chatbot* program.
 
 ## Acknowledgement
-This repo uses the [comicbubbles](https://github.com/kaisermann/comicbubbles) css library to for the 8-bit bubbles.
+This repo uses the [comicbubbles](https://github.com/kaisermann/comicbubbles) css library for the 8-bit bubbles.
 
 ## License
 [MIT](/LICENSE)
